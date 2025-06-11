@@ -14,31 +14,38 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     @Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(cors -> {
-            cors.configurationSource(request -> {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Arrays.asList("http://localhost:5174"));
-                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                config.setAllowedHeaders(Arrays.asList("*"));
-                config.setAllowCredentials(true);
-                return config;
-            });
-        })
-        .csrf().disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/api/auth/**", "/api/ai/**").permitAll()
-        .anyRequest().authenticated();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .cors(cors -> {
+                cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(Arrays.asList(
+                        "http://localhost:5176", 
+    "http://192.168.0.225:5176", 
+    "http://192.168.0.225"
+                    ));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(Arrays.asList("*"));
+                    config.setAllowCredentials(true);
+                    return config;
+                });
+            })
+            .csrf().disable()
+            .authorizeHttpRequests()
+            .requestMatchers("/api/auth/**", "/api/ai/**").permitAll()
+            .anyRequest().authenticated();
 
-    return http.build();
-}
-
+        return http.build();
+    }
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5174"));
+        config.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5176", 
+    "http://192.168.0.225:5176", 
+    "http://192.168.0.225"
+        ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
@@ -49,4 +56,3 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return new CorsFilter(source);
     }
 }
-

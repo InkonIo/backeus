@@ -11,7 +11,7 @@ import com.agrofarm.backend.dto.ChatResponse;
 import com.agrofarm.backend.service.ChatService;
 
 @RestController
-@RequestMapping("/api/ai/chat")
+@RequestMapping("/api/ai/chat") 
 public class ChatController {
 
     @Autowired
