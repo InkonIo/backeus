@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "users")  // Название таблицы в БД
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,8 +13,10 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Автоинкремент
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String email;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -24,4 +26,6 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
 }
+
