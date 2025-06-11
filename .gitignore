@@ -34,3 +34,4 @@ build/
 
 ### 🔒 Секреты и чувствительные данные ###
 **/src/main/resources/application.properties
+src/main/resources/application.properties
