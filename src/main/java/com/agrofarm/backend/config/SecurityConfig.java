@@ -16,20 +16,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> {
-                cors.configurationSource(request -> {
-                    CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList(
-                        "http://localhost:5176", 
-    "http://192.168.0.225:5176", 
-    "http://192.168.0.225"
-                    ));
-                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                    config.setAllowedHeaders(Arrays.asList("*"));
-                    config.setAllowCredentials(true);
-                    return config;
-                });
-            })
+            .cors(cors -> cors.configurationSource(request -> {
+                CorsConfiguration config = new CorsConfiguration();
+                config.setAllowedOrigins(Arrays.asList(
+                    "http://localhost:5176",
+                    "http://192.168.0.225:5176",
+                    "http://192.168.0.225",
+                    "https://react-front-mocha.vercel.app" // ✅ без слеша на конце
+                ));
+                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                config.setAllowedHeaders(Arrays.asList("*"));
+                config.setAllowCredentials(true);
+                return config;
+            }))
             .csrf().disable()
             .authorizeHttpRequests()
             .requestMatchers("/api/auth/**", "/api/ai/**").permitAll()
@@ -42,9 +41,10 @@ public class SecurityConfig {
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5176", 
-    "http://192.168.0.225:5176", 
-    "http://192.168.0.225"
+            "http://localhost:5176",
+            "http://192.168.0.225:5176",
+            "http://192.168.0.225",
+            "https://react-front-mocha.vercel.app"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
