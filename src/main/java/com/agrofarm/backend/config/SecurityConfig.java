@@ -22,6 +22,7 @@ public class SecurityConfig {
                     "http://localhost:5176",
                     "http://192.168.0.225:5176",
                     "http://192.168.0.225",
+                    "http://192.168.0.225:3000/",
                     "https://react-front-mocha.vercel.app" // ✅ без слеша на конце
                 ));
                 config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
@@ -44,6 +45,7 @@ public class SecurityConfig {
             "http://localhost:5176",
             "http://192.168.0.225:5176",
             "http://192.168.0.225",
+            "http://192.168.0.225:3000/",
             "https://react-front-mocha.vercel.app"
         ));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
