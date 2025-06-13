@@ -3,12 +3,13 @@ package com.agrofarm.backend.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.cors.CorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -16,45 +17,48 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors(cors -> cors.configurationSource(request -> {
-                CorsConfiguration config = new CorsConfiguration();
-                config.setAllowedOrigins(Arrays.asList(
-                    "http://localhost:5176",
-                    "http://192.168.0.225:5176",
-                    "http://192.168.0.225",
-                    "http://192.168.0.225:3000/",
-                    "https://react-front-mocha.vercel.app" // ✅ без слеша на конце
-                ));
-                config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                config.setAllowedHeaders(Arrays.asList("*"));
-                config.setAllowCredentials(true);
-                return config;
-            }))
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/api/auth/**", "/api/ai/**").permitAll()
-            .anyRequest().authenticated();
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/**", "/api/ai/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginProcessingUrl("/api/auth/login")
+                .permitAll()
+            )
+            .rememberMe(remember -> remember
+                .rememberMeParameter("remember-me")
+                .key("uniqueAndSecretKey123")
+                .tokenValiditySeconds(7 * 24 * 60 * 60)
+            )
+            .logout(logout -> logout
+                .logoutUrl("/api/auth/logout")
+                .deleteCookies("JSESSIONID", "remember-me")
+                .permitAll()
+            );
 
         return http.build();
     }
 
     @Bean
-    public CorsFilter corsFilter() {
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList(
-            "http://localhost:5176",
-            "http://192.168.0.225:5176",
-            "http://192.168.0.225",
-            "http://192.168.0.225:3000/",
-            "https://react-front-mocha.vercel.app"
-        ));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setAllowCredentials(true);
+
+        // Разрешаем любые порты на localhost и локальной сети
+        config.addAllowedOriginPattern("http://localhost:**");
+        config.addAllowedOriginPattern("http://127.0.0.1:*");
+        config.addAllowedOriginPattern("http://192.168.0.225:*");
+
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true); // для работы с cookie
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
-        return new CorsFilter(source);
+        return source;
     }
 }
