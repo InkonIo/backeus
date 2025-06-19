@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,7 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
     @PostMapping("/login")
 public ResponseEntity<?> login(@RequestParam String username,
                                @RequestParam String password,
@@ -51,6 +53,7 @@ public ResponseEntity<?> login(@RequestParam String username,
 }
 
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500", allowCredentials = "true")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestParam String username,
                                       @RequestParam String password,
