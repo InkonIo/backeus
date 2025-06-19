@@ -37,5 +37,12 @@ public class AuthController {
 
         return ResponseEntity.ok(Map.of("message", "Login successful"));
     }
+
+    @PostMapping("/register")
+public ResponseEntity<?> register(@RequestParam String username,
+                                  @RequestParam String password) {
+    // ⚠️ Тут только для примера. На практике надо сохранять в базу.
+    return ResponseEntity.ok(Map.of("message", "Registration successful"));
+}
 }
 
