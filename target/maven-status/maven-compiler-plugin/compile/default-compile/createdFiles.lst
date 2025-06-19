@@ -1,4 +1,3 @@
-com/agrofarm/backend/config/CorsConfig.class
 com/agrofarm/backend/repository/UserRepository.class
 com/agrofarm/backend/config/SecurityConfig.class
 com/agrofarm/backend/controller/ChatController.class
@@ -14,7 +13,6 @@ com/agrofarm/backend/dto/LoginRequest.class
 com/agrofarm/backend/controller/AuthController.class
 com/agrofarm/backend/dto/AuthRequest.class
 com/agrofarm/backend/service/ChatService.class
-com/agrofarm/backend/config/CorsConfig$1.class
 com/agrofarm/backend/dto/ChatRequest.class
 com/agrofarm/backend/entity/User$UserBuilder.class
 com/agrofarm/backend/dto/ChatResponse.class
