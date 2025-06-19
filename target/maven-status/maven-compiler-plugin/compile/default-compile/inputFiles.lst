@@ -1,5 +1,6 @@
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/BackendApplication.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/config/SecurityConfig.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/config/SwaggerConfig.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/AuthController.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/ChatController.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/UserController.java

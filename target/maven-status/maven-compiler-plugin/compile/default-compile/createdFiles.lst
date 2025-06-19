@@ -11,6 +11,7 @@ com/agrofarm/backend/entity/User.class
 com/agrofarm/backend/controller/UserController.class
 com/agrofarm/backend/dto/LoginRequest.class
 com/agrofarm/backend/controller/AuthController.class
+com/agrofarm/backend/config/SwaggerConfig.class
 com/agrofarm/backend/dto/AuthRequest.class
 com/agrofarm/backend/service/ChatService.class
 com/agrofarm/backend/dto/ChatRequest.class
