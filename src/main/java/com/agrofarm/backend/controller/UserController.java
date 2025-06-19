@@ -4,6 +4,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.agrofarm.backend.dto.LoginRequest;
 import com.agrofarm.backend.dto.RegisterRequest;
 import com.agrofarm.backend.entity.User;
+import com.agrofarm.backend.service.JwtService;
 import com.agrofarm.backend.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -37,15 +41,29 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    @Operation(summary = "Вход пользователя", description = "Аутентификация пользователя по логину и паролю")
-    public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request) {
-        try {
-            User user = userService.loginUser(request.getUsername(), request.getPassword());
-            return ResponseEntity.ok(Map.of("message", "Успешный вход: " + user.getUsername()));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(401)
-                    .body(Map.of("message", e.getMessage()));
-        }
+    @Autowired
+private AuthenticationManager authManager;
+
+@Autowired
+private JwtService jwtService;
+
+@PostMapping("/login")
+@Operation(summary = "Вход пользователя", description = "Аутентификация пользователя по логину и паролю")
+public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest request) {
+    try {
+        // Аутентифицируем через AuthenticationManager
+        var auth = authManager.authenticate(
+            new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+        );
+
+        // Генерируем токен
+        String token = jwtService.generateToken((UserDetails) auth.getPrincipal());
+
+        return ResponseEntity.ok(Map.of("token", token));
+    } catch (Exception e) {
+        return ResponseEntity.status(401)
+                .body(Map.of("message", "Неверное имя пользователя или пароль"));
     }
+}
+
 }
