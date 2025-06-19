@@ -13,7 +13,10 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class BackendApplication {
 
   public static void main(String[] args) {
-    Dotenv dotenv = Dotenv.configure().load();
+    Dotenv dotenv = Dotenv.configure()
+    .directory("target") // путь к папке с .env
+    .filename(".env")
+    .load();
 
     String openaiKey = dotenv.get("OPENAI_API_KEY");
     String dbUser = dotenv.get("POSTGRES_USERNAME");
