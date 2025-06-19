@@ -1,0 +1,15 @@
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/BackendApplication.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/config/SecurityConfig.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/AuthController.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/ChatController.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/controller/UserController.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/dto/AuthRequest.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/dto/ChatRequest.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/dto/ChatResponse.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/dto/LoginRequest.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/dto/RegisterRequest.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/entity/User.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/repository/UserRepository.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/ChatService.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/UserDetailsServiceImpl.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/UserService.java
