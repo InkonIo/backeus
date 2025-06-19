@@ -55,10 +55,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .cors().and()
+            .cors().and() // обязательно включить cors()
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()  // разрешить весь /api/auth/**
+                .requestMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
             );
 
@@ -71,7 +71,7 @@ public class SecurityConfig {
         config.setAllowedOrigins(List.of("http://localhost:5173"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // если используешь cookies
+        config.setAllowCredentials(true); // если используешь куки или авторизацию через cookie
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
