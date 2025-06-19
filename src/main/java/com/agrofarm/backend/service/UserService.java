@@ -2,57 +2,68 @@ package com.agrofarm.backend.service;
 
 import java.util.Optional;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.agrofarm.backend.entity.User;
 import com.agrofarm.backend.repository.UserRepository;
 
-    @Service
-    public class UserService {
+@Service
+public class UserService {
 
-        private final UserRepository userRepository;
-        private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-        public UserService(UserRepository userRepository) {
-            this.userRepository = userRepository;
-        }
-
-        public User registerUser(String username, String email, String rawPassword) {
-        if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
-        }
-        if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email already exists");
-        }
-
-        String encodedPassword = passwordEncoder.encode(rawPassword);
-        User user = User.builder()
-                .username(username)
-                .email(email)
-                .password(encodedPassword)
-                .role("USER")
-                .build();
-
-        return userRepository.save(user);
+    public UserService(UserRepository userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    // Метод, используемый в AuthController
+    public void registerNewUser(String username, String email, String password) {
+        if (userRepo.existsByUsername(username)) {
+            throw new RuntimeException("Username already taken");
+        }
+        if (userRepo.existsByEmail(email)) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        userRepo.save(user);
     }
 
-    public boolean checkPassword(String rawPassword, String encodedPassword) {
-        return passwordEncoder.matches(rawPassword, encodedPassword);
+    // Новый метод, используемый в UserController
+    public User registerUser(String username, String email, String password) {
+        if (userRepo.existsByUsername(username)) {
+            throw new RuntimeException("Username already taken");
+        }
+        if (userRepo.existsByEmail(email)) {
+            throw new RuntimeException("Email already registered");
+        }
+
+        User user = new User();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        return userRepo.save(user);
     }
 
-    public User loginUser(String username, String rawPassword) {
-        User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+    // Метод для логина, сравнивает пароль
+    public User loginUser(String username, String password) {
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
         return user;
+    }
+
+    public Optional<User> findByUsername(String username) {
+        return userRepo.findByUsername(username);
     }
 }

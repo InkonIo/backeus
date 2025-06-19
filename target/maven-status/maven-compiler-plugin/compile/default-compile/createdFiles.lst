@@ -3,6 +3,7 @@ com/agrofarm/backend/config/SecurityConfig.class
 com/agrofarm/backend/controller/ChatController.class
 com/agrofarm/backend/BackendApplication$MyConfiguration.class
 com/agrofarm/backend/dto/RegisterRequest.class
+com/agrofarm/backend/service/JwtService.class
 com/agrofarm/backend/BackendApplication.class
 com/agrofarm/backend/service/UserService.class
 com/agrofarm/backend/BackendApplication$MyConfiguration$1.class

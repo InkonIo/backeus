@@ -11,5 +11,6 @@
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/entity/User.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/repository/UserRepository.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/ChatService.java
+/Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/JwtService.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/UserDetailsServiceImpl.java
 /Users/inkonio/Desktop/back2/src/main/java/com/agrofarm/backend/service/UserService.java
