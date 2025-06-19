@@ -4,6 +4,6 @@ services:
     env: java
     plan: free
     buildCommand: ./mvnw package
-    startCommand: java -jar app.jar
+    startCommand: ""
     runtime: java
     region: frankfurt
